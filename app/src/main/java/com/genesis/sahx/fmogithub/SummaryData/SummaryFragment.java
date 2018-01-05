@@ -259,8 +259,7 @@ public class SummaryFragment extends Fragment {
                 InputStream is = new URL(ImageUrl).openStream();
                 /*
                         decodeStream(InputStream is)
-                        Decode an input stream into a bitmap.
-                 */
+                        Decode an input stream into a bitmap.*/
                 imageUrl = BitmapFactory.decodeStream(is);
                 drawable = RoundedBitmapDrawableFactory.create(getResources(),imageUrl);
                 drawable.setCircular(true);
@@ -286,7 +285,7 @@ public class SummaryFragment extends Fragment {
 
     /**An async task to reduce the load on your main activity and run in the background*/
     public class myGithubAsyncTask extends AsyncTask<URL, Void, GithubSummaryEvent> {
-
+        private ProgressDialog dialog = new ProgressDialog(getContext());
         @Override
         protected GithubSummaryEvent doInBackground(URL... urls) {
             // Create URL object
@@ -307,6 +306,11 @@ public class SummaryFragment extends Fragment {
             return user;
         }
 
+        protected void onPreExecute()
+        {
+            dialog.setMessage("Loading...");
+            dialog.show();
+        }
         /**
          * Update the screen with the given earthquake (which was the result of the
          * {@link myGithubAsyncTask}).
@@ -318,6 +322,8 @@ public class SummaryFragment extends Fragment {
             }
 
             updateUi(user);
+            if (dialog.isShowing()){
+                dialog.dismiss();}
         }
 
 
