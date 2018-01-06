@@ -175,8 +175,7 @@ public class ReposFragment extends Fragment {
         }
         return output.toString();
     }
-    /**
-     * Return an {@link GithubRepoEvent} object by parsing out information about the name, repo description and repo url
+    /*** Return an {@link GithubRepoEvent} object by parsing out information about the name, repo description and repo url
      * a github username from the input githubJSON string.
      */
     private ArrayList<GithubRepoEvent> extractFeatureFromJson(String githubJSON) {
@@ -212,6 +211,7 @@ public class ReposFragment extends Fragment {
 
     /**An async task to reduce the load on your main activity and run in the background*/
     public class myGithubAsyncTask extends AsyncTask<URL, Void, Void> {
+        private ProgressDialog dialog = new ProgressDialog(getContext());
         @Override
         protected Void doInBackground(URL... urls) {
             // Create URL object
