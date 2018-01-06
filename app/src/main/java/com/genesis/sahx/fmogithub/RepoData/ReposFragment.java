@@ -229,7 +229,16 @@ public class ReposFragment extends Fragment {
             // Return the {@link GithubEvent} object as the result fo the {@link myGithubAsyncTask}
         return null;
         }
-//        protected void onPostExecute(Void params) {}
+         protected void onPreExecute()
+        {
+            dialog.setMessage("Loading...");
+            dialog.show();
+         }
+        protected void onPostExecute(Void params) {
+            super.onPostExecute(params);
+            if (dialog.isShowing()){
+                dialog.dismiss();}
         }
-
+        
     }
+}
