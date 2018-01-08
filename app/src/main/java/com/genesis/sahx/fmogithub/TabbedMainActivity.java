@@ -25,7 +25,6 @@ public class TabbedMainActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         username = bundle.getString("username");
         Log.w("TabbedMainActivity","Will Connect using Username from text: "+ username);
-        createCustomFragment();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,12 +46,12 @@ public class TabbedMainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    /**Helper method to pass username input to into a Fragment*/
+    /**Helper method to pass username input to into a Fragment
     public void createCustomFragment(){
         Log.w("TabbedMainActivity","Came from text: "+ username);
         SummaryFragment summaryFragment = new SummaryFragment();
         summaryFragment.newInstance(username);
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
