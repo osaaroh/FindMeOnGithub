@@ -45,25 +45,16 @@ public class SummaryFragment extends Fragment {
 
     /**Helper method new instance used to create an instance of the Summary Fragment and pass data
      * from an activity to a fragment. To be used in an activity an {@link SummaryFragment} instance
-     * is created*/
+     * is created
     public void newInstance(String b) {
         Bundle args = new Bundle();
         SummaryFragment fragment = new SummaryFragment();
         args.putString("name", b);
         fragment.setArguments(args);
         //fragment.getHostFragmentManager().beginTransaction().commit();
-    }
+    }*/
 
-    /***Helper method for newInstance method above*/
-    public FragmentManager getHostFragmentManager(){
-        SummaryFragment summaryFragment = new SummaryFragment();
-        FragmentManager fm = summaryFragment.getFragmentManager();
-        if(fm == null){
-            fm = summaryFragment.getActivity().getSupportFragmentManager();
-        }
-        return fm;
-    }
-
+   
     // global string that houses api URL
     public String myURL;
 
