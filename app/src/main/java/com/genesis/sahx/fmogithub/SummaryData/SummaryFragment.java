@@ -51,7 +51,7 @@ public class SummaryFragment extends Fragment {
         SummaryFragment fragment = new SummaryFragment();
         args.putString("name", b);
         fragment.setArguments(args);
-        //fragment.getHostFragmentManager().beginTransaction().commit();
+        //fragment.geFragmentManager().beginTransaction().commit();
     }*/
 
    
