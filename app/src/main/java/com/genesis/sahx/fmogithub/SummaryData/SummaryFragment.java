@@ -1,12 +1,14 @@
 package com.genesis.sahx.fmogithub.SummaryData;
 
+
 import android.app.ProgressDialog;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.text.TextUtils;
@@ -17,6 +19,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.genesis.sahx.fmogithub.HistoryData.HistoryContract;
+import com.genesis.sahx.fmogithub.HistoryData.HistoryContract.UsernameHistEntry;
+import com.genesis.sahx.fmogithub.HistoryData.HistoryDBHelper;
 import com.genesis.sahx.fmogithub.R;
 import com.genesis.sahx.fmogithub.TabbedMainActivity;
 
@@ -43,18 +48,6 @@ public class SummaryFragment extends Fragment {
      */
     public static final String LOG_TAG = TabbedMainActivity.class.getSimpleName();
 
-    /**Helper method new instance used to create an instance of the Summary Fragment and pass data
-     * from an activity to a fragment. To be used in an activity an {@link SummaryFragment} instance
-     * is created
-    public void newInstance(String b) {
-        Bundle args = new Bundle();
-        SummaryFragment fragment = new SummaryFragment();
-        args.putString("name", b);
-        fragment.setArguments(args);
-        //fragment.geFragmentManager().beginTransaction().commit();
-    }*/
-
-   
     // global string that houses api URL
     public String myURL;
 
@@ -71,23 +64,13 @@ public class SummaryFragment extends Fragment {
 
     RoundedBitmapDrawable drawable;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        bundle = getActivity().getIntent().getExtras();
+        myUsername = bundle.getString("username");
         // Inflate the layout for this fragment
         rootview = inflater.inflate(R.layout.fragment_summary, container, false);
-        if(getArguments()!= null) {
-                //get the username from the activity via bundle if its not null
-                myUsername = getArguments().getString("name");
-                Log.i("Summary Fragment", "Will search using Username : " + myUsername);
-            }
-        else  {
-            //fall back and use my username, sucks right?
-            myUsername = "master-osaro";
-            Log.i("Summary Fragment","NullPointer Ex. Will Connect using default Username from text: "+ myUsername);
-        }
-
         //Instantiate and execute background thread
         myGithubAsyncTask task = new myGithubAsyncTask();
         task.execute();
@@ -246,7 +229,19 @@ public class SummaryFragment extends Fragment {
             String ImageUrl = baseJsonResponse.getString("avatar_url");
             int publicRepos = baseJsonResponse.getInt("public_repos");
             int publicGists = baseJsonResponse.getInt("public_gists");
+
+            HistoryDBHelper dbHelper = new HistoryDBHelper(getContext());
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(UsernameHistEntry.COLUMN_GITHUB_USERNAME, myUsername);
+            values.put(UsernameHistEntry.COLUMN_GITHUB_URL, getUrl());
+            values.put(UsernameHistEntry.COLUMN_GITHUB_REPOS, publicRepos);
+            Log.i(LOG_TAG, myUsername+" "+getUrl()+ "   "+publicRepos);
+            //Insert new row , returning primary key value of new row
+            long newRid = db.insert(HistoryContract.UsernameHistEntry.TABLE_NAME,null,values);
+
             try{
+
                 InputStream is = new URL(ImageUrl).openStream();
                 /*
                         decodeStream(InputStream is)
@@ -317,7 +312,6 @@ public class SummaryFragment extends Fragment {
                 dialog.dismiss();}
         }
 
-
     }
-
 }
+
