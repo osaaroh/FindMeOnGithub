@@ -24,13 +24,11 @@ public class TabbedMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tabbed_main);
         bundle = getIntent().getExtras();
         username = bundle.getString("username");
-        Log.w("TabbedMainActivity","Will Connect using Username from text: "+ username);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "History Feature will be available in next update", Snackbar.LENGTH_LONG)
-                        .setAction("Action ", null).show();
+               startActivity(new Intent(TabbedMainActivity.this, HistoryActivity.class));
             }
         });
         /**Connect Viewpager to Xml code*/
@@ -44,34 +42,5 @@ public class TabbedMainActivity extends AppCompatActivity {
         //link up the tabbed layout in Xml and set it up to work with the viewpager
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    /**Helper method to pass username input to into a Fragment
-    public void createCustomFragment(){
-        Log.w("TabbedMainActivity","Came from text: "+ username);
-        SummaryFragment summaryFragment = new SummaryFragment();
-        summaryFragment.newInstance(username);
-    }*/
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
