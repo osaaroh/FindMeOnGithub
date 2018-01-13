@@ -28,15 +28,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/gitblack"/>
-        <EditText
-        android:id="@+id/username"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:hint="master-osaro"
-        android:textSize="20sp" />
-    <Button
+         <android.support.design.widget.TextInputLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+                <EditText
+                android:id="@+id/username"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Github Username"
+                android:textSize="20sp" />
+         </android.support.design.widget.TextInputLayout>
+         <Button
         android:id="@+id/mainButton"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
