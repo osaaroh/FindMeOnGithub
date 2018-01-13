@@ -37,8 +37,6 @@ public class TabbedMainActivity extends AppCompatActivity {
         PagerAdapter adapter =  new PagerAdapter(getSupportFragmentManager());
         /**Let our Viewpager use this adapter*/
         viewPager.setAdapter(adapter);
-
-
         //link up the tabbed layout in Xml and set it up to work with the viewpager
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
