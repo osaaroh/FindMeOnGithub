@@ -46,6 +46,11 @@ public class ReposFragment extends Fragment {
 
     public RepoAdapter adapter;
 
+    //A bundle to pass data from an activity into this fragment
+    public  Bundle bundle;
+
+    public String myUsername;
+
 
     /**
      * Tag for the log messages
@@ -56,6 +61,8 @@ public class ReposFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        bundle = getActivity().getIntent().getExtras();
+        myUsername = bundle.getString("username");
         // Inflate the layout for this fragment
         rootview = inflater.inflate(R.layout.fragment_repo,container,false);
         //run Async-task
@@ -84,7 +91,7 @@ public class ReposFragment extends Fragment {
     /**The getUsername() method gets the username from the fragment's activity. Username is hardcoded
     for now due to roadblocks*/
     public String getUsername() {
-        return "master-osaro";
+        return myUsername;
     }
 
     /**Get url method appends the username to the github repos api*/
@@ -175,7 +182,8 @@ public class ReposFragment extends Fragment {
         }
         return output.toString();
     }
-    /*** Return an {@link GithubRepoEvent} object by parsing out information about the name, repo description and repo url
+    /**
+     * Return an {@link GithubRepoEvent} object by parsing out information about the name, repo description and repo url
      * a github username from the input githubJSON string.
      */
     private ArrayList<GithubRepoEvent> extractFeatureFromJson(String githubJSON) {
